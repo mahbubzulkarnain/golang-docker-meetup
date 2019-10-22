@@ -11,6 +11,9 @@ export interface IEvent {
   startDate: Date;
   endDate: Date;
   capacity: number;
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IEventInput extends IInput {

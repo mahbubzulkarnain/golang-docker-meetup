@@ -15,7 +15,7 @@ export default class EventAPI extends RESTDataSource {
   }
 
   public async getList(
-    { limit = 10, offset = 0, ...props }: IEventInput = { limit: constant.limit, offset: constant.offset }
+    { limit = 10, offset = 0, ...props }: IEventInput = { limit: constant.limit, offset: constant.offset },
   ) {
     const { edges } = await this.get("/", { limit, offset, ...props });
     return this.dataLoader.loadMany(edges);
