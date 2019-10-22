@@ -21,7 +21,7 @@ export default async ({ query: { ids, limit = 10, offset = 0, ...props } }, res,
     const [[{ result, totalCount }]] = await db.query(queryGenerator(
       ids && ids.length
         ? `select * from "${TableName}" where id in (${ids})`
-        : `select id from "${TableName}" ${condition(props)} LIMIT ${limit} OFFSET ${offset}`
+        : `select id from "${TableName}" ${condition(props)} LIMIT ${limit} OFFSET ${offset}`,
     ));
     res.json(
       response(

@@ -5,7 +5,7 @@ input TagInput {
 
 type Tag {
   id: ID
-  
+
   name: String
 
   events(input: EventInput): [Event]
