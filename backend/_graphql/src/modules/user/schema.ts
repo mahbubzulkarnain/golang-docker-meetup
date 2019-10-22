@@ -12,6 +12,8 @@ type User {
   photoURL: String
   providerId: String
   uid: String
+
+  chapters: [Chapter]
 }
 
 type UserMetadata {
