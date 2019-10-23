@@ -2124,8 +2124,10 @@ graphql-extensions@^0.10.4:
     apollo-server-env "^2.4.3"
     apollo-server-types "^0.2.5"
 
-"graphql-response-parser@file:../../../graphql-response-parser":
-  version "1.0.0"
+graphql-response-parser@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/graphql-response-parser/-/graphql-response-parser-0.0.2.tgz#77129690abe630250a1ae1fc791d53fdef7bb91f"
+  integrity sha512-jgYHCAvVi/AkArXdk+1I2zQzNAGiD95hIGZ4bMtjPTcc6A/z00AaCoe/jCuThQDxNZXJ8f1HNgnrt/RKxhK4wg==
 
 graphql-subscriptions@^1.0.0:
   version "1.1.0"

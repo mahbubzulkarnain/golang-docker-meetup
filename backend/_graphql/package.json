@@ -35,7 +35,7 @@
     "firebase-admin": "^8.6.1",
     "googleapis": "^44.0.0",
     "graphql": "^14.5.8",
-    "graphql-response-parser": "file:../../../graphql-response-parser",
+    "graphql-response-parser": "^0.0.2",
     "graphql-tools": "^4.0.5",
     "pino": "^5.13.4",
     "pino-pretty": "^3.2.2",

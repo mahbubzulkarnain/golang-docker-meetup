@@ -16,7 +16,7 @@
     "@types/node": "^12.11.1",
     "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
-    "graphql-response-parser": "file:../../../graphql-response-parser",
+    "graphql-response-parser": "^0.0.2",
     "pg": "^7.12.1",
     "pino": "^5.13.4",
     "pino-pretty": "^3.2.2",
