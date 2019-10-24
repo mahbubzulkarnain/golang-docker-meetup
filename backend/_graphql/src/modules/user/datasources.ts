@@ -9,11 +9,6 @@ export default class UserAPI extends RESTDataSource {
     return ids.map((id) => users.find((data) => data.uid === id));
   });
 
-  constructor() {
-    super();
-    this.baseURL = "http://localhost:4001";
-  }
-
   public async getById(id) {
     return this.dataLoader.load(id);
   }
