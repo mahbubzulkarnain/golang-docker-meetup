@@ -4,15 +4,11 @@ import constant from "../../constants";
 import { ILocationInput } from "./interface";
 
 export default class LocationAPI extends RESTDataSource {
+  public baseURL = "http://localhost:4004";
   private dataLoader = new DataLoader(async (ids: string[]) => {
     const { edges } = await this.get("/", { ids: `'${ids.join("','")}'` });
     return ids.map((id) => edges.find((data) => data.id === id));
   });
-
-  constructor() {
-    super();
-    this.baseURL = "http://localhost:4004";
-  }
 
   public async getList(
     { limit = 10, offset = 0, ...props }: ILocationInput = { limit: constant.limit, offset: constant.offset },

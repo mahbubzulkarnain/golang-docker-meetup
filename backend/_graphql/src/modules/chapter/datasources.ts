@@ -4,15 +4,11 @@ import constant from "../../constants";
 import { IChapterInput } from "./interface";
 
 export default class ChapterAPI extends RESTDataSource {
+  public baseURL = "http://localhost:4002";
   private dataLoader = new DataLoader(async (ids: string[]) => {
     const { edges } = await this.get("/", { ids: `'${ids.join("','")}'` });
     return ids.map((id) => edges.find((data) => data.id === id));
   });
-
-  constructor() {
-    super();
-    this.baseURL = "http://localhost:4002";
-  }
 
   public async getList(
     { limit = 10, offset = 0, ...props }: IChapterInput = { limit: constant.limit, offset: constant.offset },
