@@ -2,12 +2,12 @@ export default class Storage {
   private KEYNAME: string;
   private component: Storage;
 
-  constructor(component, keyname) {
+  constructor(component: any, keyname: string) {
     this.component = (component ? component : localStorage);
-    this.KEYNAME = (keyname && typeof keyname === 'string' && keyname.length > 0 ? keyname : 'storage');
+    this.KEYNAME = (keyname && keyname.length > 0 ? keyname : 'storage');
   }
 
-  get getItem() {
+  get getItem(): any {
     try {
       const value = this.component.getItem(this.KEYNAME);
       if (value && value.length > 0) {
@@ -20,7 +20,7 @@ export default class Storage {
     return null
   }
 
-  setItem(paramValue) {
+  setItem(paramValue: any) {
     try {
       // @ts-ignore
       this.component.setItem(this.KEYNAME, paramValue)

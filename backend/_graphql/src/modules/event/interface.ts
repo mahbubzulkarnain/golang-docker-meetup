@@ -1,4 +1,4 @@
-import { IInput } from "../_base/directives/interface";
+import { IInput } from "../_base/interface";
 
 export interface IEvent {
   id: string;
