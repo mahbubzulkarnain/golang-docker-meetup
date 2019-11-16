@@ -39,15 +39,21 @@ const resources = (file) => {
 
 export const graphqlPath = "/graphql";
 
+export const resolvers = modules
+  .reduce((result, item) => merge(result, resources(item + "/resolvers").default), {});
+export const schemaDirectives = modules
+  .reduce((result, item) => merge(result, resources(item + "/directives").default), {});
+export const typeDefs = modules
+  .map((item) => resources(item + "/schema").default);
+export const schema = makeExecutableSchema({ resolvers, schemaDirectives, typeDefs });
+export const dataSources = () => modules
+  .reduce((result, item) => merge(result, resources(item + "/datasources")), {}).default;
+
 export default (new ApolloServer({
   context,
-  dataSources: () => modules.reduce((result, item) => merge(result, resources(item + "/datasources")), {}).default,
-  debug      : DEV,
-  playground : { settings: { "editor.theme": "light" } },
-  schema     : makeExecutableSchema({
-    resolvers       : modules.reduce((result, item) => merge(result, resources(item + "/resolvers").default), {}),
-    schemaDirectives: modules.reduce((result, item) => merge(result, resources(item + "/directives").default), {}),
-    typeDefs        : modules.map((item) => resources(item + "/schema").default),
-  }),
-  tracing    : DEV,
+  dataSources,
+  debug     : DEV,
+  playground: { settings: { "editor.theme": "light" } },
+  schema,
+  tracing   : DEV,
 }));

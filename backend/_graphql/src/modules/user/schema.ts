@@ -1,34 +1,44 @@
-export default `
-enum Roles {
-  ADMIN
-  USER
-  GUEST
-}
+import gql from "graphql-tag";
 
-type User {
-  displayName: String
-  email: String!
-  phoneNumber: String
-  photoURL: String
-  providerId: String
-  uid: String
+export default gql`
+    enum Roles {
+        ADMIN
+        USER
+        GUEST
+    }
 
-  chapters: [Chapter]
-}
+    type User {
+        displayName: String
+        email: String!
+        phoneNumber: String
+        photoURL: String
+        providerId: String
+        uid: String
 
-type UserMetadata {
-  creationTime: String
-  lastSignInTime: String
-}
+        chapters: [Chapter]
+    }
 
-type MeResponse {
-  edges: User
-  message: String
-  pageInfo: PageInfo
-  totalCount: Int
-}
+    type UserMetadata {
+        creationTime: String
+        lastSignInTime: String
+    }
 
-extend type Query {
-  me: MeResponse @auth(roles: [ USER ])
-}
+    type MeResponse {
+        edges: User
+        message: String
+        pageInfo: PageInfo
+        totalCount: Int
+    }
+
+    input UserInput {
+        displayName: String
+        email: String!
+        password: String!
+        photoURL: String
+        phoneNumber: String
+    }
+
+    extend type Query {
+        me: MeResponse @auth(roles: [ USER ])
+    }
 `;

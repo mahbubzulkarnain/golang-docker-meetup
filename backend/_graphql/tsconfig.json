@@ -19,7 +19,8 @@
     "theme": "default"
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "node_modules/@types/jest/index.d.ts"
   ],
   "exclude": [
     "__tests__",

@@ -1,4 +1,5 @@
 export interface IContext {
-  user?: any;
+  DEV?: boolean;
   token?: string;
+  user?: any;
 }

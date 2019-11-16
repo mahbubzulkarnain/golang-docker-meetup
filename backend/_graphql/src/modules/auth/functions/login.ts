@@ -3,7 +3,7 @@ import axios from "../../../vendors/axios";
 import { getAPIKey } from "../../../vendors/firebase";
 import { ILoginResponse } from "../interface";
 
-export default (email: string, password: string): Promise<ILoginResponse | Error> =>
+export default (email: string, password: string): Promise<ILoginResponse> =>
   new Promise(
     async (resolve, reject) => {
       try {

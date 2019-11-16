@@ -4,7 +4,7 @@ import constant from "../../constants";
 import { IEventInput } from "./interface";
 
 export default class EventAPI extends RESTDataSource {
-  public baseURL = "http://localhost:4003";
+  public baseURL = process.env.BASE_URL_EVENT || "http://localhost:4003";
   private dataLoader = new DataLoader(async (ids: string[]) => {
     const { edges } = await this.get("/", { ids: `'${ids.join("','")}'` });
     return ids.map((id) => edges.find((data) => data.id === id));

@@ -1,33 +1,35 @@
-export default `
-directive @upper on FIELD_DEFINITION
+import gql from "graphql-tag";
 
-scalar Date
+export default gql`
+    directive @upper on FIELD_DEFINITION
 
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPrevPage: Boolean!
-  nextCursor: String
-  prevCursor: String
-}
+    scalar Date
 
-type PropertyDefaultInput {
-  parent: String
-  args: String
-  context: String
-  info: String
-}
+    type PageInfo {
+        hasNextPage: Boolean!
+        hasPrevPage: Boolean!
+        nextCursor: String
+        prevCursor: String
+    }
 
-type PingResponse {
-  edges: PropertyDefaultInput
-  message: String @upper
-  pageInfo: PageInfo
-  totalCount: Int
-}
+    type PropertyDefaultInput {
+        parent: String
+        args: String
+        context: String
+        info: String
+    }
 
-type Query {
-  ping: PingResponse
-}
-type Mutation {
-  ping: PingResponse
-}
+    type PingResponse {
+        edges: PropertyDefaultInput
+        message: String @upper
+        pageInfo: PageInfo
+        totalCount: Int
+    }
+
+    type Query {
+        ping: PingResponse
+    }
+    type Mutation {
+        ping: PingResponse
+    }
 `;

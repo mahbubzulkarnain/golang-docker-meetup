@@ -4,7 +4,7 @@ import constant from "../../constants";
 import { ICategoryInput } from "./interface";
 
 export default class CategoryAPI extends RESTDataSource {
-  public baseURL = "http://localhost:4001";
+  public baseURL = process.env.BASE_URL_CATEGORY || "http://localhost:4001";
   private dataLoader = new DataLoader(async (ids: string[]) => {
     const { edges } = await this.get("/", { ids: `'${ids.join("','")}'` });
     return ids.map((id) => edges.find((data) => data.id === id));

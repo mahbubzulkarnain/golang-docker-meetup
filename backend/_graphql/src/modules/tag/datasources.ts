@@ -4,7 +4,7 @@ import constant from "../../constants";
 import { ITagInput } from "./interface";
 
 export default class TagAPI extends RESTDataSource {
-  public baseURL = "http://localhost:4005";
+  public baseURL = process.env.BASE_URL_TAG || "http://localhost:4005";
   private dataLoader = new DataLoader(async (ids: string[]) => {
     const { edges } = await this.get("/", { ids: `'${ids.join("','")}'` });
     return ids.map((id) => edges.find((data) => data.id === id));
