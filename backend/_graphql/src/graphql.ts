@@ -4,7 +4,7 @@ import { merge } from "lodash";
 import context from "./configs/context";
 
 const ENV = (process.env.NODE_ENV || "dev").toLowerCase();
-const DEV = ENV !== "prod" && ENV !== "production";
+const DEV = (ENV !== "prod") && (ENV !== "production");
 
 const dirmodules = `${__dirname}/modules`;
 const modules = fs.readdirSync(dirmodules)
@@ -25,7 +25,6 @@ const resources = (file) => {
     } else {
       return require(path);
     }
-
   }
   if (fs.existsSync(path)) {
     return {

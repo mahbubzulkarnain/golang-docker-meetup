@@ -15,7 +15,7 @@ export default async ({ connection, req }: ExpressContext): Promise<IContext> =>
   let user;
   if (token) {
     user = await verifyIdToken(token);
-    user = user && isEmail(user.email) ? user : "";
+    user = (user && isEmail(user.email)) ? user : "";
   }
 
   return { user, token };

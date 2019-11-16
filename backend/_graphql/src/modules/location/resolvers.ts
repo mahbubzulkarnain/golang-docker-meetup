@@ -1,4 +1,5 @@
 import { response } from "graphql-response-parser";
+import { IDataSources } from "../../interfaces/IDataSources";
 import { IResponse } from "../../interfaces/IResponse";
 import { ILocation } from "./interface";
 
@@ -15,16 +16,20 @@ export default {
     createdAt: (location: ILocation) => location.createdAt,
     updatedAt: (location: ILocation) => location.updatedAt,
 
-    chapters: (location: ILocation, { input }, { dataSources: { chapterAPI } }) =>
-      chapterAPI.getList({ locationId: location.id, ...input }),
-    venues  : (location: ILocation, { input }, { dataSources: { venueAPI } }) =>
-      venueAPI.getList({ locationId: location.id, ...input }),
+    chapters: (location: ILocation, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+      .getList({ locationId: location.id, ...input }),
+    venues  : (location: ILocation, { input }, { dataSources: { venueAPI } }: IDataSources) => venueAPI
+      .getList({ locationId: location.id, ...input }),
   },
+
   Mutation: {},
   Query   : {
-    location : async (source, { input: { id } }, { dataSources: { locationAPI } }): Promise<ILocation | Error> =>
-      locationAPI.getById(id),
-    locations: async (source, { input }, { dataSources: { locationAPI } }): Promise<IResponse | Error> =>
+    location : async (
+      source,
+      { input: { id } },
+      { dataSources: { locationAPI } }: IDataSources,
+    ): Promise<ILocation | Error> => locationAPI.getById(id),
+    locations: async (source, { input }, { dataSources: { locationAPI } }: IDataSources): Promise<IResponse | Error> =>
       response(await locationAPI.getList(input)),
   },
 };
