@@ -4,10 +4,34 @@ export const MOCK_RESULT = (parent, args, context, info) => ({
   config    : {},
   data      : {
     edges     : {
-      args   : JSON.stringify(args),
-      context: JSON.stringify(context),
-      info   : JSON.stringify(info),
-      parent : JSON.stringify(parent),
+      args   : () => {
+        try {
+          return JSON.stringify(args);
+        } catch (e) {
+          return "";
+        }
+      },
+      context: () => {
+        try {
+          return JSON.stringify(context);
+        } catch (e) {
+          return "";
+        }
+      },
+      info   : () => {
+        try {
+          return JSON.stringify(info);
+        } catch (e) {
+          return "";
+        }
+      },
+      parent : () => {
+        try {
+          return JSON.stringify(parent);
+        } catch (e) {
+          return "";
+        }
+      },
     },
     message   : `Server has been started, with stage ${ENV}.`,
     pageInfo  : {
