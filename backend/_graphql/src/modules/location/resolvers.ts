@@ -13,12 +13,12 @@ export default {
     postalCode : (location: ILocation) => location.postalCode,
     region     : (location: ILocation) => location.region,
 
-    createdAt: (location: ILocation) => location.createdAt,
-    updatedAt: (location: ILocation) => location.updatedAt,
+    createdAt  : (location: ILocation) => location.createdAt,
+    updatedAt  : (location: ILocation) => location.updatedAt,
 
-    chapters: (location: ILocation, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapters   : (location: ILocation, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
       .getList({ locationId: location.id, ...input }),
-    venues  : (location: ILocation, { input }, { dataSources: { venueAPI } }: IDataSources) => venueAPI
+    venues     : (location: ILocation, { input }, { dataSources: { venueAPI } }: IDataSources) => venueAPI
       .getList({ locationId: location.id, ...input }),
   },
 

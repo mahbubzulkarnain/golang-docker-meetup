@@ -9,15 +9,19 @@ import { IAuthInput } from "../auth/interface";
 import { LOGIN } from "../auth/test";
 import { ICategory, ICategoryInput } from "./interface";
 
+const TYPE_CATEGORY = `
+      id
+      name
+      slug
+      createdAt
+      updatedAt
+`;
+
 export const GET_CATEGORIES = gql`
-    query categories($input: CategoryInput){
-        categories(input: $input){
+    query categories($input: CategoryInput) {
+        categories(input: $input) {
             edges {
-                id
-                name
-                slug
-                createdAt
-                updatedAt
+                ${TYPE_CATEGORY}
             }
             message
             pageInfo {
@@ -32,13 +36,9 @@ export const GET_CATEGORIES = gql`
 `;
 
 export const GET_CATEGORY_BY_ID = gql`
-    query category($input: CategoryInput){
-        category(input: $input){
-            id
-            name
-            slug
-            createdAt
-            updatedAt
+    query category($input: CategoryInput) {
+        category(input: $input) {
+            ${TYPE_CATEGORY}
         }
     }
 `;
@@ -68,6 +68,15 @@ beforeAll(async () => {
 });
 
 describe("Queries", () => {
+  it('should fail because "Unauthorized"', async () => {
+    const server = constructTestServer({});
+    const { query } = createTestClient(server);
+    const { data, errors } = await query({
+      query: GET_CATEGORIES,
+    });
+    expect(errors[0].message).toEqual("Unauthorized");
+    expect(data.categories).toEqual(null);
+  });
   it("should fetches list of categories", async () => {
     const context: IContext = { token, user };
     const server = constructTestServer({ context });
@@ -95,8 +104,9 @@ describe("Queries", () => {
       variables: { input },
     });
     if (errors) {
-      expect(errors[0].extensions.response.body.message)
-        .toEqual(`invalid input syntax for type uuid: ""`);
+      expect(errors[0].extensions.response.body.message).toEqual(
+        `invalid input syntax for type uuid: ""`,
+      );
     } else {
       if (data && data.category) {
         const category: Record<string, any> = data;

@@ -5,9 +5,9 @@ import { IEvent } from "./interface";
 
 export default {
   Event: {
-    chapterId: (event: IEvent) => event.chapterId,
-    tagId    : (event: IEvent) => event.tagId,
-    venueId  : (event: IEvent) => event.venueId,
+    chapterId  : (event: IEvent) => event.chapterId,
+    tagId      : (event: IEvent) => event.tagId,
+    venueId    : (event: IEvent) => event.venueId,
 
     capacity   : (event: IEvent) => event.capacity,
     description: (event: IEvent) => event.description,
@@ -15,11 +15,11 @@ export default {
     name       : (event: IEvent) => event.name,
     startDate  : (event: IEvent) => event.startDate,
 
-    chapter: (event: IEvent, props, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapter    : (event: IEvent, props, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
       .getById(event.chapterId),
-    tag    : (event: IEvent, props, { dataSources: { tagAPI } }: IDataSources) => tagAPI
+    tag        : (event: IEvent, props, { dataSources: { tagAPI } }: IDataSources) => tagAPI
       .getById(event.tagId),
-    venue  : (event: IEvent, props, { dataSources: { venueAPI } }: IDataSources) => venueAPI
+    venue      : (event: IEvent, props, { dataSources: { venueAPI } }: IDataSources) => venueAPI
       .getById(event.venueId),
   },
 

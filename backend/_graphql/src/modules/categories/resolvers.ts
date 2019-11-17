@@ -5,13 +5,13 @@ import { ICategory } from "./interface";
 
 export default {
   Category: {
-    name: (category: ICategory) => category.name,
-    slug: (category: ICategory) => category.slug,
+    name     : (category: ICategory) => category.name,
+    slug     : (category: ICategory) => category.slug,
 
     createdAt: (category: ICategory) => category.createdAt,
     updatedAt: (category: ICategory) => category.updatedAt,
 
-    chapters: (category: ICategory, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapters : (category: ICategory, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
       .getList({ categoryId: category.id, ...input }),
   },
 

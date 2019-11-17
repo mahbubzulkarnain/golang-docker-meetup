@@ -4,8 +4,8 @@ import { IResponse } from "../../interfaces/IResponse";
 import { ITag } from "./interface";
 
 export default {
-  Tag     : {
-    name: (tag: ITag) => tag.name,
+  Tag: {
+    name  : (tag: ITag) => tag.name,
 
     events: (tag: ITag, { input }, { dataSources: { eventAPI } }: IDataSources) => eventAPI
       .getList({ tagId: tag.id, ...input }),
