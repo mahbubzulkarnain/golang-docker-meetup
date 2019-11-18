@@ -1,4 +1,4 @@
-interface IServiceAPI {
+export interface IServiceAPI {
   categoryAPI: any;
   chapterAPI: any;
   eventAPI: any;
@@ -6,8 +6,4 @@ interface IServiceAPI {
   tagAPI: any;
   userAPI: any;
   venueAPI: any;
-}
-
-export interface IDataSources {
-  dataSources: IServiceAPI;
 }
