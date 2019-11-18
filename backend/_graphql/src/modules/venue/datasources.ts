@@ -1,7 +1,7 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 import constant from "../../constants";
-import { IVenueInput } from "./interface";
+import { IVenuesInput } from "./interface";
 
 export default class VenueAPI extends RESTDataSource {
   public baseURL = process.env.BASE_URL_VENUE || "http://localhost:4006";
@@ -11,7 +11,7 @@ export default class VenueAPI extends RESTDataSource {
   });
 
   public async getList(
-    { limit = 10, offset = 0, ...props }: IVenueInput = { limit: constant.limit, offset: constant.offset },
+    { limit = 10, offset = 0, ...props }: IVenuesInput = { limit: constant.limit, offset: constant.offset },
   ) {
     const { edges } = await this.get("/", { limit, offset, ...props });
     return this.dataLoader.loadMany(edges);

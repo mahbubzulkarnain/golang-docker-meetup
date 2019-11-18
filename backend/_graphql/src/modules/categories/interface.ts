@@ -9,6 +9,10 @@ export interface ICategory {
   updatedAt: Date;
 }
 
-export interface ICategoryInput extends IInput {
+export interface ICategoriesInput extends IInput {
+  id?: string;
+}
+
+export interface ICategoryInput {
   id?: string;
 }

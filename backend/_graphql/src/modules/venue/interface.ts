@@ -10,6 +10,10 @@ export interface IVenue {
   updatedAt: Date;
 }
 
-export interface IVenueInput extends IInput {
+export interface IVenuesInput extends IInput {
+  id?: string;
+}
+
+export interface IVenueInput {
   id?: string;
 }

@@ -1,7 +1,7 @@
 import { response } from "graphql-response-parser";
-import { IDataSources } from "../../interfaces/IDataSources";
+import { IContext } from "../../interfaces/IContext";
 import { IResponse } from "../../interfaces/IResponse";
-import { IChapter } from "./interface";
+import { IChapter, IChapterInput, IChaptersInput } from "./interface";
 
 export default {
   Chapter: {
@@ -16,13 +16,13 @@ export default {
     createdAt  : (chapter: IChapter) => chapter.createdAt,
     updatedAt  : (chapter: IChapter) => chapter.updatedAt,
 
-    category   : (chapter: IChapter, props, { dataSources: { categoryAPI } }: IDataSources) => categoryAPI
+    category   : (chapter: IChapter, props, { dataSources: { categoryAPI } }: IContext) => categoryAPI
       .getById(chapter.categoryId),
-    creator    : (chapter: IChapter, props, { dataSources: { userAPI } }: IDataSources) => userAPI
+    creator    : (chapter: IChapter, props, { dataSources: { userAPI } }: IContext) => userAPI
       .getById(chapter.creatorId),
-    events     : (chapter: IChapter, { input }, { dataSources: { eventAPI } }: IDataSources) => eventAPI
+    events     : (chapter: IChapter, { input }, { dataSources: { eventAPI } }: IContext) => eventAPI
       .getList({ chapterId: chapter.id, ...input }),
-    location   : (chapter: IChapter, props, { dataSources: { locationAPI } }: IDataSources) => locationAPI
+    location   : (chapter: IChapter, props, { dataSources: { locationAPI } }: IContext) => locationAPI
       .getById(chapter.locationId),
   },
 
@@ -30,13 +30,13 @@ export default {
   Query   : {
     chapter : async (
       source,
-      { input: { id } },
-      { dataSources: { chapterAPI } }: IDataSources,
+      { input: { id } }: { input: IChapterInput },
+      { dataSources: { chapterAPI } }: IContext,
     ): Promise<IChapter | Error> => chapterAPI.getById(id),
     chapters: async (
       source,
-      { input },
-      { dataSources: { chapterAPI } }: IDataSources,
+      { input }: { input: IChaptersInput },
+      { dataSources: { chapterAPI } }: IContext,
     ): Promise<IResponse | Error> => response(await chapterAPI.getList(input)),
   },
 };

@@ -1,7 +1,7 @@
 import { response } from "graphql-response-parser";
-import { IDataSources } from "../../interfaces/IDataSources";
+import { IContext } from "../../interfaces/IContext";
 import { IResponse } from "../../interfaces/IResponse";
-import { ICategory } from "./interface";
+import { ICategoriesInput, ICategory, ICategoryInput } from "./interface";
 
 export default {
   Category: {
@@ -11,7 +11,7 @@ export default {
     createdAt: (category: ICategory) => category.createdAt,
     updatedAt: (category: ICategory) => category.updatedAt,
 
-    chapters : (category: ICategory, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapters : (category: ICategory, { input }, { dataSources: { chapterAPI } }: IContext) => chapterAPI
       .getList({ categoryId: category.id, ...input }),
   },
 
@@ -19,13 +19,13 @@ export default {
   Query   : {
     categories: async (
       source,
-      { input },
-      { dataSources: { categoryAPI } }: IDataSources,
+      { input }: { input: ICategoriesInput },
+      { dataSources: { categoryAPI } }: IContext,
     ): Promise<IResponse | Error> => response(await categoryAPI.getList(input)),
     category  : async (
       source,
-      { input: { id } },
-      { dataSources: { categoryAPI } }: IDataSources,
+      { input: { id } }: { input: ICategoryInput },
+      { dataSources: { categoryAPI } }: IContext,
     ): Promise<ICategory | Error> => categoryAPI.getById(id),
   },
 };

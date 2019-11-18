@@ -1,5 +1,5 @@
 import { response } from "graphql-response-parser";
-import { IDataSources } from "../../interfaces/IDataSources";
+import { IContext } from "../../interfaces/IContext";
 import { IResponse } from "../../interfaces/IResponse";
 import { IVenue } from "./interface";
 
@@ -7,14 +7,14 @@ export default {
   Venue: {
     locationId: (venue: IVenue) => venue.locationId,
 
-    name: (venue: IVenue) => venue.name,
+    name      : (venue: IVenue) => venue.name,
 
-    createdAt: (venue: IVenue) => venue.createdAt,
-    updatedAt: (venue: IVenue) => venue.updatedAt,
+    createdAt : (venue: IVenue) => venue.createdAt,
+    updatedAt : (venue: IVenue) => venue.updatedAt,
 
-    events  : (venue: IVenue, { input }, { dataSources: { eventAPI } }: IDataSources) =>
+    events    : (venue: IVenue, { input }, { dataSources: { eventAPI } }: IContext) =>
       eventAPI.getList({ venueId: venue.id, ...input }),
-    location: (venue: IVenue, props, { dataSources: { locationAPI } }: IDataSources) =>
+    location  : (venue: IVenue, props, { dataSources: { locationAPI } }: IContext) =>
       locationAPI.getById(venue.locationId),
   },
 
@@ -23,9 +23,9 @@ export default {
     venue : async (
       source,
       { input: { id } },
-      { dataSources: { venueAPI } }: IDataSources,
+      { dataSources: { venueAPI } }: IContext,
     ): Promise<IVenue | Error> => venueAPI.getById(id),
-    venues: async (source, { input }, { dataSources: { venueAPI } }: IDataSources): Promise<IResponse | Error> =>
+    venues: async (source, { input }, { dataSources: { venueAPI } }: IContext): Promise<IResponse | Error> =>
       response(await venueAPI.getList(input)),
   },
 };

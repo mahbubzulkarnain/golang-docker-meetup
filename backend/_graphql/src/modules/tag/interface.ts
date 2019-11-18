@@ -5,6 +5,10 @@ export interface ITag {
   name: string;
 }
 
-export interface ITagInput extends IInput {
+export interface ITagsInput extends IInput {
+  id?: string;
+}
+
+export interface ITagInput {
   id?: string;
 }

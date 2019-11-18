@@ -1,7 +1,7 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 import constant from "../../constants";
-import { IChapterInput } from "./interface";
+import { IChaptersInput } from "./interface";
 
 export default class ChapterAPI extends RESTDataSource {
   public baseURL = process.env.BASE_URL_CHAPTER || "http://localhost:4002";
@@ -11,7 +11,7 @@ export default class ChapterAPI extends RESTDataSource {
   });
 
   public async getList(
-    { limit = 10, offset = 0, ...props }: IChapterInput = { limit: constant.limit, offset: constant.offset },
+    { limit = 10, offset = 0, ...props }: IChaptersInput = { limit: constant.limit, offset: constant.offset },
   ) {
     const { edges } = await this.get("/", { limit, offset, ...props });
     return this.dataLoader.loadMany(edges);

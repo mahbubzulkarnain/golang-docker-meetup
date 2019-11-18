@@ -1,27 +1,30 @@
 import gql from "graphql-tag";
 
 export default gql`
-input TagInput {
-  id: ID
-}
+    input TagsInput {
+        id: ID
+    }
+    input TagInput {
+        id: ID
+    }
 
-type Tag {
-  id: ID
+    type Tag {
+        id: ID
 
-  name: String
+        name: String
 
-  events(input: EventInput): [Event]
-}
+        events(input: EventInput): [Event]
+    }
 
-type TagsResponse {
-  edges: [Tag]
-  message: String
-  pageInfo: PageInfo
-  totalCount: Int
-}
+    type TagsResponse {
+        edges: [Tag]
+        message: String
+        pageInfo: PageInfo
+        totalCount: Int
+    }
 
-extend type Query {
-  tags(input: TagInput): TagsResponse @auth
-  tag(input: TagInput): Tag @auth
-}
+    extend type Query {
+        tags(input: TagInput): TagsResponse @auth
+        tag(input: TagInput): Tag @auth
+    }
 `;

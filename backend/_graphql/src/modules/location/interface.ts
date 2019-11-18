@@ -15,6 +15,10 @@ export interface ILocation {
   updatedAt: Date;
 }
 
-export interface ILocationInput extends IInput {
+export interface ILocationsInput extends IInput {
+  id?: string;
+}
+
+export interface ILocationInput {
   id?: string;
 }

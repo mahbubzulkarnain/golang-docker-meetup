@@ -16,6 +16,10 @@ export interface IEvent {
   updatedAt: Date;
 }
 
-export interface IEventInput extends IInput {
+export interface IEventsInput extends IInput {
+  id?: string;
+}
+
+export interface IEventInput {
   id?: string;
 }

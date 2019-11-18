@@ -1,7 +1,7 @@
 import { response } from "graphql-response-parser";
-import { IDataSources } from "../../interfaces/IDataSources";
+import { IContext } from "../../interfaces/IContext";
 import { IResponse } from "../../interfaces/IResponse";
-import { IEvent } from "./interface";
+import { IEvent, IEventInput, IEventsInput } from "./interface";
 
 export default {
   Event: {
@@ -15,19 +15,25 @@ export default {
     name       : (event: IEvent) => event.name,
     startDate  : (event: IEvent) => event.startDate,
 
-    chapter    : (event: IEvent, props, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapter    : (event: IEvent, props, { dataSources: { chapterAPI } }: IContext) => chapterAPI
       .getById(event.chapterId),
-    tag        : (event: IEvent, props, { dataSources: { tagAPI } }: IDataSources) => tagAPI
+    tag        : (event: IEvent, props, { dataSources: { tagAPI } }: IContext) => tagAPI
       .getById(event.tagId),
-    venue      : (event: IEvent, props, { dataSources: { venueAPI } }: IDataSources) => venueAPI
+    venue      : (event: IEvent, props, { dataSources: { venueAPI } }: IContext) => venueAPI
       .getById(event.venueId),
   },
 
   Mutation: {},
   Query   : {
-    event : async (source, { input: { id } }, { dataSources: { eventAPI } }: IDataSources): Promise<IEvent | Error> =>
-      eventAPI.getById(id),
-    events: async (source, { input }, { dataSources: { eventAPI } }: IDataSources): Promise<IResponse | Error> =>
-      response(await eventAPI.getList(input)),
+    event: async (
+      source,
+      { input: { id } }: { input: IEventInput },
+      { dataSources: { eventAPI } }: IContext,
+    ): Promise<IEvent | Error> => eventAPI.getById(id),
+    events: async (
+      source,
+      { input }: { input: IEventsInput },
+      { dataSources: { eventAPI } }: IContext,
+    ): Promise<IResponse | Error> => response(await eventAPI.getList(input)),
   },
 };

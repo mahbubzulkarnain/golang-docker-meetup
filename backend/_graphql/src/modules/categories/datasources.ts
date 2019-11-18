@@ -1,7 +1,7 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 import constant from "../../constants";
-import { ICategoryInput } from "./interface";
+import { ICategoriesInput} from "./interface";
 
 export default class CategoryAPI extends RESTDataSource {
   public baseURL = process.env.BASE_URL_CATEGORY || "http://localhost:4001";
@@ -11,7 +11,7 @@ export default class CategoryAPI extends RESTDataSource {
   });
 
   public async getList(
-    { limit = 10, offset = 0, ...props }: ICategoryInput = { limit: constant.limit, offset: constant.offset },
+    { limit = 10, offset = 0, ...props }: ICategoriesInput = { limit: constant.limit, offset: constant.offset },
   ) {
     const { edges } = await this.get("/", { limit, offset, ...props });
     return this.dataLoader.loadMany(edges);

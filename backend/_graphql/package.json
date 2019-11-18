@@ -9,6 +9,7 @@
     "compile:watch": "node_modules/typescript/bin/tsc --watch",
     "dev": "node_modules/.bin/nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' index.ts",
     "test": "node_modules/jest/bin/jest.js --detectOpenHandles",
+    "test:coverage": "node_modules/jest/bin/jest.js --detectOpenHandles --coverage",
     "lint": "node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'",
     "lint:fix": "npm run lint --fix"
   },

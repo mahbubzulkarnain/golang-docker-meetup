@@ -1,7 +1,7 @@
 import { response } from "graphql-response-parser";
-import { IDataSources } from "../../interfaces/IDataSources";
+import { IContext } from "../../interfaces/IContext";
 import { IResponse } from "../../interfaces/IResponse";
-import { ILocation } from "./interface";
+import { ILocation, ILocationInput, ILocationsInput } from "./interface";
 
 export default {
   Location: {
@@ -16,9 +16,9 @@ export default {
     createdAt  : (location: ILocation) => location.createdAt,
     updatedAt  : (location: ILocation) => location.updatedAt,
 
-    chapters   : (location: ILocation, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapters   : (location: ILocation, { input }, { dataSources: { chapterAPI } }: IContext) => chapterAPI
       .getList({ locationId: location.id, ...input }),
-    venues     : (location: ILocation, { input }, { dataSources: { venueAPI } }: IDataSources) => venueAPI
+    venues     : (location: ILocation, { input }, { dataSources: { venueAPI } }: IContext) => venueAPI
       .getList({ locationId: location.id, ...input }),
   },
 
@@ -26,10 +26,13 @@ export default {
   Query   : {
     location : async (
       source,
-      { input: { id } },
-      { dataSources: { locationAPI } }: IDataSources,
+      { input: { id } }: { input: ILocationInput },
+      { dataSources: { locationAPI } }: IContext,
     ): Promise<ILocation | Error> => locationAPI.getById(id),
-    locations: async (source, { input }, { dataSources: { locationAPI } }: IDataSources): Promise<IResponse | Error> =>
-      response(await locationAPI.getList(input)),
+    locations: async (
+      source,
+      { input }: { input: ILocationsInput },
+      { dataSources: { locationAPI } }: IContext,
+    ): Promise<IResponse | Error> => response(await locationAPI.getList(input)),
   },
 };

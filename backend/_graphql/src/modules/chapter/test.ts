@@ -6,46 +6,54 @@ import constructTestServer from "../../utils/constructTestServer";
 import { DEFAULT_LIST_RESPONSE, QUERY_RESPONSE } from "../_base/test";
 import { LOGIN } from "../auth/test";
 import { IUser } from "../user/interface";
-import { ICategory, ICategoryInput } from "./interface";
+import { IChapter, IChapterInput } from "./interface";
 
-const TYPE_CATEGORY = `
-      id
-      name
-      slug
-      createdAt
-      updatedAt
+const TYPE_CHAPTER = `
+    id
+    categoryId
+    locationId
+    creatorId
+    name
+    description
+    details
+    createdAt
+    updatedAt
 `;
 
-export const QUERY_CATEGORIES = gql`
-    query categories($input: CategoriesInput) {
-        categories(input: $input) {
+export const QUERY_CHAPTERS = gql`
+    query chapters($input: ChaptersInput) {
+        chapters(input: $input) {
             edges {
-                ${TYPE_CATEGORY}
+                ${TYPE_CHAPTER}
             }
             ${QUERY_RESPONSE}
         }
     }
 `;
 
-export const QUERY_CATEGORY_BY_ID = gql`
-    query category($input: CategoryInput) {
-        category(input: $input) {
-            ${TYPE_CATEGORY}
+export const QUERY_CHAPTER_BY_ID = gql`
+    query chapter($input: ChapterInput){
+        chapter(input: $input){
+            ${TYPE_CHAPTER}
         }
     }
 `;
 
-const CATEGORY_RESPONSE: ICategory = {
-  createdAt: expect.any(Number),
-  id       : expect.anything(),
-  name     : expect.any(String),
-  slug     : expect.any(String),
-  updatedAt: expect.any(Number),
+export const CHAPTER_RESPONSE: IChapter = {
+  categoryId : expect.anything(),
+  createdAt  : expect.any(Number),
+  creatorId  : expect.anything(),
+  description: expect.any(String),
+  details    : expect.any(String),
+  id         : expect.anything(),
+  locationId : expect.anything(),
+  name       : expect.any(String),
+  updatedAt  : expect.any(Number),
 };
 
 let token = "";
 let user = {} as IUser;
-let categoryId = "";
+let chapterId = "";
 
 beforeAll(async () => {
   const result = await LOGIN(auth.email, auth.password);
@@ -53,41 +61,41 @@ beforeAll(async () => {
   token = result.token;
 });
 
-describe("Category", () => {
+describe("Chapter", () => {
   describe("Queries", () => {
     it('should fail because "Unauthorized"', async () => {
       const server = constructTestServer({});
       const { query } = createTestClient(server);
       const { data, errors } = await query({
-        query: QUERY_CATEGORIES,
+        query: QUERY_CHAPTERS,
       });
       expect(errors[0].message).toEqual("Unauthorized");
-      expect(data.categories).toEqual(null);
+      expect(data.chapters).toEqual(null);
     });
-    it("should fetches list of categories", async () => {
+    it("should fetches list of chapters", async () => {
       const context: IContext = { token, user };
       const server = constructTestServer({ context });
       const { query } = createTestClient(server);
       const { data, errors } = await query({
-        query: QUERY_CATEGORIES,
+        query: QUERY_CHAPTERS,
       });
       expect(data).toMatchObject({
-        categories: DEFAULT_LIST_RESPONSE,
+        chapters: DEFAULT_LIST_RESPONSE,
       });
       expect(errors).toEqual(undefined);
       if (data && data.edges) {
-        const category: ICategory = data.edges[0];
-        expect(category).toMatchObject(CATEGORY_RESPONSE);
-        categoryId = category.id;
+        const chapter: IChapter = data.edges[0];
+        expect(chapter).toMatchObject(CHAPTER_RESPONSE);
+        chapterId = chapter.id;
       }
     });
-    it("should fetch category by id", async () => {
+    it("should fetch chapter by id", async () => {
       const context: IContext = { token, user };
       const server = constructTestServer({ context });
       const { query } = createTestClient(server);
-      const input: ICategoryInput = { id: categoryId };
+      const input: IChapterInput = { id: chapterId };
       const { data, errors } = await query({
-        query    : QUERY_CATEGORY_BY_ID,
+        query    : QUERY_CHAPTER_BY_ID,
         variables: { input },
       });
       if (errors) {
@@ -95,12 +103,12 @@ describe("Category", () => {
           `invalid input syntax for type uuid: ""`,
         );
       } else {
-        if (data && data.category) {
-          const category: Record<string, any> = data;
-          expect(data).toMatchObject({ CATEGORY_RESPONSE });
-          expect(category.id).toEqual(categoryId);
+        if (data && data.chapter) {
+          const chapter: Record<string, any> = data;
+          expect(data).toMatchObject({ CHAPTER_RESPONSE });
+          expect(chapter.id).toEqual(chapterId);
         } else {
-          expect(data.category).toEqual(null);
+          expect(data.chapter).toEqual(null);
         }
         expect(errors).toEqual(undefined);
       }

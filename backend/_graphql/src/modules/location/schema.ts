@@ -1,37 +1,40 @@
 import gql from "graphql-tag";
 
 export default gql`
-input LocationInput {
-  id: ID
-}
+    input LocationsInput {
+        id: ID
+    }
+    input LocationInput {
+        id: ID
+    }
 
-type Location {
-  id: ID
+    type Location {
+        id: ID
 
-  city: String
-  postalCode: String
-  region: String
-  country: String
-  countryCode: String
-  latitude: Float
-  longitude: Float
+        city: String
+        postalCode: String
+        region: String
+        country: String
+        countryCode: String
+        latitude: Float
+        longitude: Float
 
-  createdAt: Date
-  updatedAt: Date
+        createdAt: Date
+        updatedAt: Date
 
-  chapters: [Chapter]
-  venues: [Venue]
-}
+        chapters: [Chapter]
+        venues: [Venue]
+    }
 
-type LocationsResponse {
-  edges: [Location]
-  message: String
-  pageInfo: PageInfo
-  totalCount: Int
-}
+    type LocationsResponse {
+        edges: [Location]
+        message: String
+        pageInfo: PageInfo
+        totalCount: Int
+    }
 
-extend type Query {
-  locations(input: LocationInput): LocationsResponse @auth
-  location(input: LocationInput): Location @auth
-}
+    extend type Query {
+        locations(input: LocationsInput): LocationsResponse @auth
+        location(input: LocationInput): Location @auth
+    }
 `;

@@ -1,38 +1,43 @@
 import gql from "graphql-tag";
 
 export default gql`
-input ChapterInput {
-  id: ID
-}
+    input ChaptersInput {
+        id: ID
+        limit: Int
+        offset: Int
+    }
+    input ChapterInput {
+        id: ID
+    }
 
-type Chapter {
-  id: ID
-  categoryId: ID
-  locationId: ID
-  creatorId: ID
+    type Chapter {
+        id: ID
+        categoryId: ID
+        locationId: ID
+        creatorId: ID
 
-  name: String
-  description: String
-  details: String
+        name: String
+        description: String
+        details: String
 
-  createdAt: Date
-  updatedAt: Date
+        createdAt: Date
+        updatedAt: Date
 
-  category: Category
-  events: [Event]
-  location: Location
-  creator: User
-}
+        category: Category
+        events: [Event]
+        location: Location
+        creator: User
+    }
 
-type ChaptersResponse {
-  edges: [Chapter]
-  message: String
-  pageInfo: PageInfo
-  totalCount: Int
-}
+    type ChaptersResponse {
+        edges: [Chapter]
+        message: String
+        pageInfo: PageInfo
+        totalCount: Int
+    }
 
-extend type Query {
-  chapters(input: ChapterInput): ChaptersResponse @auth
-  chapter(input: ChapterInput): Chapter @auth
-}
+    extend type Query {
+        chapters(input: ChaptersInput): ChaptersResponse @auth
+        chapter(input: ChapterInput): Chapter @auth
+    }
 `;

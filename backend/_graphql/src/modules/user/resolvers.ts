@@ -1,5 +1,5 @@
 import { errors, response } from "graphql-response-parser";
-import { IDataSources } from "../../interfaces/IDataSources";
+import { IContext } from "../../interfaces/IContext";
 import { IResponse } from "../../interfaces/IResponse";
 import { IUser } from "./interface";
 
@@ -10,7 +10,7 @@ export default {
     phoneNumber: (user: IUser) => user.phoneNumber,
     photoURL   : (user: IUser) => user.photoURL,
 
-    chapters   : (user: IUser, { input }, { dataSources: { chapterAPI } }: IDataSources) => chapterAPI
+    chapters   : (user: IUser, { input }, { dataSources: { chapterAPI } }: IContext) => chapterAPI
       .getList({ creatorId: user.uid, ...input }),
   },
 
@@ -19,7 +19,7 @@ export default {
     me: (
       source,
       props,
-      { user, dataSources: { userAPI } },
+      { user, dataSources: { userAPI } }: IContext,
     ): Promise<IResponse | Error> => new Promise(async (resolve, reject) => {
       try {
         resolve(response(await userAPI.getById(user.uid)));

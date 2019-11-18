@@ -14,6 +14,10 @@ export interface IChapter {
   updatedAt: Date;
 }
 
-export interface IChapterInput extends IInput {
+export interface IChaptersInput extends IInput {
+  id?: string;
+}
+
+export interface IChapterInput {
   id?: string;
 }

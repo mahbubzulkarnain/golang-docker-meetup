@@ -19,13 +19,13 @@ const queryGenerator = (query) => `
 export default async ({ query: { ids, limit = 10, offset = 0, ...props } }, res, next) => {
   try {
     const [[{ result, totalCount }]] = await db.query(queryGenerator(
-      ids && ids.length
+      (ids && ids.length)
         ? `select * from "${TableName}" where id in (${ids})`
         : `select id from "${TableName}" ${condition(props)} LIMIT ${limit} OFFSET ${offset}`,
     ));
-    res.json(
+    return await res.json(
       response(
-        ids ? result || [] : (result && result.length ? result.map(({ id }) => id) : []),
+        ids ? result || [] : ((result && result.length) ? result.map(({ id }) => id) : []),
         { limit, offset, totalCount },
       ),
     );

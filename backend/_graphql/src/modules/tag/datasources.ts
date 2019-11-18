@@ -1,7 +1,7 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import DataLoader from "dataloader";
 import constant from "../../constants";
-import { ITagInput } from "./interface";
+import { ITagsInput } from "./interface";
 
 export default class TagAPI extends RESTDataSource {
   public baseURL = process.env.BASE_URL_TAG || "http://localhost:4005";
@@ -11,7 +11,7 @@ export default class TagAPI extends RESTDataSource {
   });
 
   public async getList(
-    { limit = 10, offset = 0, ...props }: ITagInput = { limit: constant.limit, offset: constant.offset },
+    { limit = 10, offset = 0, ...props }: ITagsInput = { limit: constant.limit, offset: constant.offset },
   ) {
     const { edges } = await this.get("/", { limit, offset, ...props });
     return this.dataLoader.loadMany(edges);
