@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mahbub Zulkarnain <mahbub.zulkarnain@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.11.1",
