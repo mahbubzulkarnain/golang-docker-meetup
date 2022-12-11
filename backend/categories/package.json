@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.11.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-pino-logger": "^4.0.0",
     "graphql-response-parser": "^0.0.2",
     "pg": "^7.12.1",
